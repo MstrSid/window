@@ -14134,7 +14134,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  const modalTimerId = setTimeout(() => (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__.showModalByTimer)('.popup_engineer', modalTimerId), 5000);
+  const modalTimerId = setTimeout(() => (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__.showModalByTimer)('.popup_engineer', modalTimerId), 60000);
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close', modalTimerId);
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.phone_link', '.popup_engineer', '.popup_engineer .popup_close', modalTimerId);
 });
