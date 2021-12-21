@@ -1,0 +1,34 @@
+{
+  "name": "window",
+  "version": "1.0.0",
+  "description": "landing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MstrSid/window.git"
+  },
+  "author": "Yauhen Kasmachus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MstrSid/window/issues"
+  },
+  "homepage": "https://github.com/MstrSid/window#readme",
+  "browserslist": [
+    "> 1%",
+    "not dead"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "browser-sync": "^2.27.7",
+    "gulp": "^4.0.2",
+    "webpack": "^5.65.0",
+    "webpack-stream": "^7.0.0"
+  }
+}
