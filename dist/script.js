@@ -77,26 +77,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "showModalByTimer": function() { return /* binding */ showModalByTimer; }
 /* harmony export */ });
 function bindModal(triggerSelector, modalSelector, closeSelector, timer) {
+  let closeClickOverlay = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
   const trigger = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
-        close = document.querySelector(closeSelector);
+        close = document.querySelector(closeSelector),
+        windows = document.querySelectorAll('[data-modal]');
   trigger.forEach(item => {
     item.addEventListener('click', event => {
       if (event.target) {
         event.preventDefault();
       }
 
+      windows.forEach(item => {
+        item.style.display = 'none';
+      });
       modal.style.display = 'block';
       document.body.style.overflow = 'hidden';
       clearTimeout(timer);
     });
   });
   close.addEventListener('click', () => {
+    windows.forEach(item => {
+      item.style.display = 'none';
+    });
     modal.style.display = 'none';
     document.body.style.overflow = '';
   });
   modal.addEventListener('click', event => {
-    if (event.target === modal) {
+    if (event.target === modal && closeClickOverlay === true) {
+      windows.forEach(item => {
+        item.style.display = 'none';
+      });
       modal.style.display = 'none';
       document.body.style.overflow = '';
     }
@@ -125,7 +136,8 @@ function showModalByTimer(selector, timer) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = function (headerSelector, tabSelector, contentSelector, activeClass) {
+  let display = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'block';
   const header = document.querySelector(headerSelector),
         tab = document.querySelectorAll(tabSelector),
         content = document.querySelectorAll(contentSelector);
@@ -141,7 +153,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
 
   function showTabContent() {
     let i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    content[i].style.display = 'block';
+    content[i].style.display = display;
     tab[i].classList.add(activeClass);
   }
 
@@ -14256,8 +14268,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const modalTimerId = setTimeout(() => (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__.showModalByTimer)('.popup_engineer', modalTimerId), 60000);
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close', modalTimerId);
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.phone_link', '.popup_engineer', '.popup_engineer .popup_close', modalTimerId);
+  (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_calc_btn', '.popup_calc', '.popup_calc_close', modalTimerId, false);
+  (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', modalTimerId, false);
+  (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', modalTimerId, false);
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'slick-active');
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])('form', 'input');
 });
 }();
