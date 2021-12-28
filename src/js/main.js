@@ -3,10 +3,22 @@ import bindModal from './modules/modals';
 import {showModalByTimer} from './modules/modals';
 import tabs from './modules/tabs';
 import forms from './modules/forms';
+import changeModalState from './modules/changeModalState';
 
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
+
+	let modalState = {
+		bType: -1,
+		width: -1,
+		height: -1,
+        wType: "unselected",
+		profile: "unchecked"
+	};
+
+	changeModalState(modalState);
+
 	const modalTimerId = setTimeout(() => showModalByTimer('.popup_engineer', modalTimerId), 60000);
 
 	bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close', modalTimerId);
@@ -18,6 +30,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	tabs('.glazing_slider', '.glazing_block', '.glazing_content', 'slick-active');
 	tabs('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
 	tabs('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
-	forms('form', 'input');
+	forms('form', 'input', modalState);
 
 });

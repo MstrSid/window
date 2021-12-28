@@ -1,4 +1,4 @@
-const forms = (formSelector, inputSelector) => {
+const forms = (formSelector, inputSelector, state = {}) => {
 	const form = document.querySelectorAll(formSelector),
 		inputs = document.querySelectorAll(inputSelector),
 		phoneInputs = document.querySelectorAll('input[name="user_phone"]');
@@ -39,6 +39,12 @@ const forms = (formSelector, inputSelector) => {
 			item.appendChild(statusMessage);
 
 			const formData = new FormData(item);
+
+			if (item.getAttribute('data-calc') === "end") {
+				for(let key in state){
+					formData.append(key, state[key]);
+				}
+			}
 
 			postData('assets/server.php', formData)
 				.then(res => {
