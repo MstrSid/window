@@ -49,8 +49,6 @@ const changeModalState = state => {
             state[prop] = item.value;
             break;
         }
-
-        console.log(state);
       });
     });
   }
@@ -176,11 +174,15 @@ const forms = function (formSelector, inputSelector, state) {
         clearInputs();
         /* костыль начался*/
 
-        const windowClass = document.querySelectorAll('.do_image_more');
-        windowClass.forEach(elem => {
-          elem.classList.remove('do_image_more');
-        });
+        const tempClass = document.querySelectorAll('.do_image_more');
+
+        if (tempClass.length > 0) {
+          tempClass.forEach(elem => {
+            elem.classList.remove('do_image_more');
+          });
+        }
         /* костыль закончился, простите за него */
+
 
         for (let key in state) {
           state[key] = 'unknown';
