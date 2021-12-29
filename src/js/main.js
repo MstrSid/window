@@ -6,6 +6,7 @@ import {
 import tabs from './modules/tabs';
 import forms from './modules/forms';
 import changeModalState from './modules/changeModalState';
+import timer from './modules/timer';
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -34,4 +35,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	tabs('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', true, 'inline-block');
 	forms('form', 'input', modalState, "select", "input");
 
+	timer('#timer', '2021-12-31 00:00:00');
 });
