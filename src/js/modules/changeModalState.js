@@ -38,7 +38,7 @@ const changeModalState = (state) => {
 				console.log(state);
 			});
 		});
-		
+
 	}
 
 	setStateModal('click', balconyType, 'bType');

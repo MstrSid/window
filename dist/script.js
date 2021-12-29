@@ -95,11 +95,22 @@ const checkNumInput = selector => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const forms = function (formSelector, inputSelector) {
-  let state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hiddenClass": function() { return /* binding */ hiddenClass; }
+/* harmony export */ });
+const forms = function (formSelector, inputSelector, state) {
   const form = document.querySelectorAll(formSelector),
         inputs = document.querySelectorAll(inputSelector),
-        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        phoneInputs = document.querySelectorAll('input[name="user_phone"]'),
+        optionalInputs = [];
+
+  for (var _len = arguments.length, optionalSelectors = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+    optionalSelectors[_key - 3] = arguments[_key];
+  }
+
+  optionalSelectors.forEach(elem => {
+    optionalInputs.push(document.querySelectorAll(elem));
+  });
   const message = {
     loading: 'Загрузка...',
     success: 'Спасибо, скоро менеджер свяжется с Вами!',
@@ -118,6 +129,22 @@ const forms = function (formSelector, inputSelector) {
   const clearInputs = () => {
     inputs.forEach(item => {
       item.value = '';
+    });
+    optionalInputs.forEach(item => {
+      item.forEach(elem => {
+        switch (elem.nodeName) {
+          case 'INPUT':
+            if (elem.getAttribute('type') === 'checkbox') {
+              elem.checked = false;
+            }
+
+            break;
+
+          case 'SELECT':
+            elem.selectedIndex = 0;
+            break;
+        }
+      });
     });
   };
 
@@ -147,6 +174,19 @@ const forms = function (formSelector, inputSelector) {
         statusMessage.textContent = message.failure;
       }).finally(() => {
         clearInputs();
+        /* костыль начался*/
+
+        const windowClass = document.querySelectorAll('.do_image_more');
+        windowClass.forEach(elem => {
+          elem.classList.remove('do_image_more');
+        });
+        /* костыль закончился, простите за него */
+
+        for (let key in state) {
+          state[key] = 'unknown';
+        }
+
+        hiddenClass = true;
         setTimeout(() => {
           statusMessage.remove();
         }, 5000);
@@ -155,6 +195,7 @@ const forms = function (formSelector, inputSelector) {
   });
 };
 
+let hiddenClass;
 /* harmony default export */ __webpack_exports__["default"] = (forms);
 
 /***/ }),
@@ -231,7 +272,8 @@ function showModalByTimer(selector, timer) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const tabs = function (headerSelector, tabSelector, contentSelector, activeClass) {
-  let display = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'block';
+  let hidden = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  let display = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'block';
   const header = document.querySelector(headerSelector),
         tab = document.querySelectorAll(tabSelector),
         content = document.querySelectorAll(contentSelector);
@@ -247,8 +289,13 @@ const tabs = function (headerSelector, tabSelector, contentSelector, activeClass
 
   function showTabContent() {
     let i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    content[i].style.display = display;
-    tab[i].classList.add(activeClass);
+
+    if (hidden === false) {
+      content[i].style.display = display;
+      tab[i].classList.add(activeClass);
+    } else {
+      content[i].style.display = display;
+    }
   }
 
   hideTabContent();
@@ -258,6 +305,7 @@ const tabs = function (headerSelector, tabSelector, contentSelector, activeClass
 
     if (target.classList.contains(tabSelector.replace(/\./, '')) || target.parentNode.classList.contains(tabSelector.replace(/\./, ''))) {
       e.preventDefault();
+      hidden = false;
       tab.forEach((item, i) => {
         if (target == item || target.parentNode == item) {
           hideTabContent();
@@ -14362,11 +14410,11 @@ window.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
   let modalState = {
-    bType: -1,
-    width: -1,
-    height: -1,
-    wType: "unselected",
-    profile: "unchecked"
+    bType: "unknown",
+    width: "unknown",
+    height: "unknown",
+    wType: "unknown",
+    profile: "unknown"
   };
   (0,_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])(modalState);
   const modalTimerId = setTimeout(() => (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__.showModalByTimer)('.popup_engineer', modalTimerId), 60000);
@@ -14377,8 +14425,8 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', modalTimerId, false);
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'slick-active');
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
-  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
-  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])('form', 'input', modalState);
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', true, 'inline-block');
+  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])('form', 'input', modalState, "select", "input");
 });
 }();
 /******/ })()
