@@ -7,6 +7,7 @@ import tabs from './modules/tabs';
 import forms from './modules/forms';
 import changeModalState from './modules/changeModalState';
 import timer from './modules/timer';
+import images from './modules/images';
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -36,4 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	forms('form', 'input', modalState, "select", "input");
 
 	timer('#timer', '2021-12-31 00:00:00');
+
+	images();
 });
